@@ -1,0 +1,62 @@
+package ru.kata.spring.boot_security.demo.enity;
+
+import lombok.Data;
+
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
+@Entity
+@Data
+public class Role {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int  id;
+
+    private String name;
+
+    @ManyToMany
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "role_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private Set<User> users;
+
+    public Role() {
+    }
+
+    public Role(String role) {
+        this.name = role;
+    }
+
+    public void addUser(User user) {
+        if (this.users == null) {
+            this.users = new HashSet<>();
+        }
+        this.users.add(user);
+    }
+
+    @Override
+    public String toString() {
+        return "Role_" +
+                "name='" + name + '\'';
+    }
+
+    public String getName() {
+        return "Role_"+name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Role role1 = (Role) o;
+        return Objects.equals(name, role1.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(name);
+    }
+
+}
