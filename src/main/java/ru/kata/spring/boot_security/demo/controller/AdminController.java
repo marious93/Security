@@ -1,6 +1,5 @@
 package ru.kata.spring.boot_security.demo.controller;
 
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,18 +12,13 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-    private final DBService dbService;
+
     private final UserService userService;
 
-    public AdminController(DBService dbService, UserService userService) {
-        this.dbService = dbService;
+    public AdminController(UserService userService) {
         this.userService = userService;
     }
-    @PostMapping("/delete/{id}")
-    public String deleteUser(@PathVariable int id) {
-        dbService.deleteById(id);
-        return "redirect:/admin";
-    }
+
 
     @GetMapping("/{id}")
     public String index(@PathVariable int id,Model model) {
@@ -46,12 +40,18 @@ public class AdminController {
 
     @PostMapping("/edit/{id}")
     public String updateUser1(@ModelAttribute("user")@Validated User user, BindingResult bindingResult,
-                              @PathVariable int id, Model model) {
+                              @PathVariable int id) {
         if (bindingResult.hasErrors()) {
             return "admin/edit";
         }
         userService.updateUser(id, user);
         return "redirect:/admin/users";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String deleteUser(@PathVariable int id) {
+        userService.deleteById(id);
+        return "redirect:/admin";
     }
 
 }

@@ -16,8 +16,8 @@ import static java.util.Arrays.stream;
 @Component
 public class SuccessUserHandler implements AuthenticationSuccessHandler {
     // Spring Security использует объект Authentication, пользователя авторизованной сессии.
-    private static final String USER = "USER";
-    private static final String ADMIN = "ADMIN";
+    private static final String USER = "ROLE_USER";
+    private static final String ADMIN = "ROLE_ADMIN";
 
     private final UserService userService;
 

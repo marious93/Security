@@ -30,7 +30,7 @@ public class PublicController {
         if (bindingResult.hasErrors()) {
             return "public/create";
         }
-        dbService.saveUser(user);
+        dbService.saveAdmin(user);
         return "redirect:/user";
     }
 

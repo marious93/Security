@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 import java.util.*;
 
 @Entity
-@Table(name = "test_user")
+@Table(name = "users")
 @Data
 public class User implements UserDetails {
 

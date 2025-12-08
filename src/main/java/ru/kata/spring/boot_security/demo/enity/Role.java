@@ -11,6 +11,7 @@ import java.util.Set;
 @Entity
 @Data
 public class Role {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int  id;
@@ -31,12 +32,6 @@ public class Role {
         this.name = role;
     }
 
-    public void addUser(User user) {
-        if (this.users == null) {
-            this.users = new HashSet<>();
-        }
-        this.users.add(user);
-    }
 
     @Override
     public String toString() {
