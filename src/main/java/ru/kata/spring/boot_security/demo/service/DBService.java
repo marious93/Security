@@ -10,8 +10,8 @@ import ru.kata.spring.boot_security.demo.enity.User;
 public class DBService {
     private final RoleService roleService;
     private final UserService userService;
-    private static final String USER_ROLE = "ROLE_USER";
-    private static final String ADMIN_ROLE = "ROLE_ADMIN";
+    private static final String USER_ROLE = "USER";
+    private static final String ADMIN_ROLE = "ADMIN";
 
     public DBService(RoleService roleService, UserService userService) {
         this.roleService = roleService;
@@ -29,19 +29,26 @@ public class DBService {
     }
 
     public void saveAdmin(User user) {
-        Role userRole = roleService.findByName(USER_ROLE);
-        if (userRole == null) {
-            userRole = new Role(USER_ROLE);
-        }
         Role adminRole = roleService.findByName(ADMIN_ROLE);
         if (adminRole == null) {
             adminRole = new Role(ADMIN_ROLE);
         }
-        roleService.save(userRole);
         roleService.save(adminRole);
-        user.addRole(userRole);
         user.addRole(adminRole);
         userService.save(user);
+    }
+    public void addRole(User user, Role role) {
+        Role role1 = roleService.findByName(role.getName());
+        if (role1 == null) {
+            role1 = new Role(role.getName());
+            roleService.save(role1);
+        }
+        user.addRole(role1);
+        userService.save(user);
+    }
+
+    public void deleteById(int id) {
+        userService.deleteById(id);
     }
 
 }

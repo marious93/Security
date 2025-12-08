@@ -6,7 +6,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.enity.Role;
@@ -14,8 +13,7 @@ import ru.kata.spring.boot_security.demo.enity.User;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,13 +26,34 @@ public class UserService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
-    public User findById(int id) {
+    public List<User> getUsersList() {
+        return userRepository.findAll();
+    }
+
+    public Integer findIdByUsername(String username) {
+        User user = userRepository.findByUsername(username);
+        return user.getId();
+    }
+
+    public User findUserById(int id) {
         return userRepository.findById(id).orElseThrow(
                 () -> new UsernameNotFoundException("User not found"));
     }
 
     public void save(User user) {
         userRepository.save(user);
+    }
+
+    public void updateUser(int id, User user) {
+        User oldUser = userRepository.findById(id).orElseThrow(
+                () -> new UsernameNotFoundException("User not found"));
+        oldUser.setUsername(user.getUsername());
+        oldUser.setPassword(user.getPassword());
+        userRepository.save(oldUser);
+    }
+
+    public void deleteById(int id) {
+        userRepository.deleteById(id);
     }
 
 

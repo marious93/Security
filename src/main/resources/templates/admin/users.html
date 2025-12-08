@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+</head>
+<body>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Login</th>
+        <th>Role</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="User : ${users}">
+        <td>
+            <a th:href="@{/admin/{id}(id=${User.getId()})}" th:text="${User.getId()}">user</a>
+        </td>
+        <td th:text="${User.getUsername()}"></td>
+        <td th:text="${User.getRoles1()}"></td>
+    </tr>
+    </tbody>
+</table>
+<br/>
+<hr/>
+<a href="/new"> Create new user</a>
+</body>
+</html>
