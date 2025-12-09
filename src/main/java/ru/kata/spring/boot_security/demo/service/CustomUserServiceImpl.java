@@ -111,10 +111,10 @@ public class CustomUserServiceImpl implements UserDetailsService, CustomUserServ
         return new org.springframework.security.core.userdetails.User
                 (user.getUsername()
                         , user.getPassword()
-                        , ugh(user.getRoles()));
+                        , convertMapToSet(user.getRoles()));
     }
 
-    private Collection<? extends GrantedAuthority> ugh(Collection<Role> roles) {
+    private Collection<? extends GrantedAuthority> convertMapToSet(Collection<Role> roles) {
         return roles.stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toSet());
     }
 
