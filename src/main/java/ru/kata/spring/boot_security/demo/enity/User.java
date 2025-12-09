@@ -41,7 +41,7 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public String getRoles1() {
+    public String getRolesToString() {
         String result = "";
         for (Role role : roles) {
             result = result + role.getName() + ",";
@@ -54,6 +54,10 @@ public class User implements UserDetails {
             this.roles = new HashSet<>();
         }
         this.roles.add(role);
+    }
+
+    public void deleteRole(Role role) {
+        this.roles.remove(role);
     }
 
 

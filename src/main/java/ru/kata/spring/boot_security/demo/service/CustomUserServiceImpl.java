@@ -70,13 +70,19 @@ public class CustomUserServiceImpl implements UserDetailsService, CustomUserServ
     }
 
     @Override
-    public void addRole(User user, Role newRole) {
+    public void addRoleToUser(User user, Role newRole) {
         Role role = roleRepository.findByName(newRole.getName());
         if (role == null) {
             role = new Role(newRole.getName());
             roleRepository.save(role);
         }
         user.addRole(role);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void removeRoleFromUser(User user, Role role) {
+        user.deleteRole(role);
         userRepository.save(user);
     }
 

@@ -18,7 +18,9 @@ public interface CustomUserService {
 
     public void saveAdmin(User user);
 
-    public void addRole(User user, Role newRole);
+    public void addRoleToUser(User user, Role newRole);
+
+    public void removeRoleFromUser(User user, Role oldRole);
 
     public void updateUser(int id, User user);
 
