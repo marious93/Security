@@ -34,7 +34,7 @@ public class AdminController {
     }
 
     @GetMapping("/{id}")
-    public String showUser(@PathVariable int id,Model model) {
+    public String showUser(@PathVariable int id, Model model) {
         model.addAttribute("user", userService.findUserById(id));
         return "admin/info";
     }
@@ -46,14 +46,14 @@ public class AdminController {
     }
 
     @GetMapping("/edit/{id}")
-    public String updateUser(@PathVariable int id,Model model) {
+    public String updateUser(@PathVariable int id, Model model) {
         model.addAttribute("user", userService.findUserById(id));
         return "admin/edit";
     }
 
     @PostMapping("/edit/{id}")
-    public String updateUser(@ModelAttribute("user")@Validated User user, BindingResult bindingResult,
-                              @PathVariable int id) {
+    public String updateUser(@ModelAttribute("user") @Validated User user, BindingResult bindingResult,
+                             @PathVariable int id) {
         if (bindingResult.hasErrors()) {
             return "admin/edit";
         }
@@ -64,7 +64,7 @@ public class AdminController {
     @PostMapping("/delete/{id}")
     public String deleteUser(@PathVariable int id) {
         userService.deleteUserById(id);
-        return "redirect:/admin";
+        return "redirect:/admin/users";
     }
 
 }
