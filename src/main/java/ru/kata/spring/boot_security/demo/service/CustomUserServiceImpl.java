@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class CustomUserServiceImpl implements UserDetailsService, CustomUserService {
+public class CustomUserServiceImpl implements CustomUserService {
     private static final String USER_ROLE = "ROLE_USER";
     private static final String ADMIN_ROLE = "ROLE_ADMIN";
     private final UserRepository userRepository;

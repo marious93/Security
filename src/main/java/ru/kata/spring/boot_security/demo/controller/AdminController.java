@@ -29,7 +29,7 @@ public class AdminController {
         if (bindingResult.hasErrors()) {
             return "admin/create";
         }
-        userService.saveAdmin(user);
+        userService.saveUser(user);
         return "redirect:/admin/users";
     }
 
