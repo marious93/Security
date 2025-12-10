@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.enity.Role;
 import ru.kata.spring.boot_security.demo.enity.User;
-import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
 import java.util.Collection;
@@ -20,15 +19,14 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class CustomUserServiceImpl implements UserDetailsService, CustomUserService {
-
-    private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
     private static final String USER_ROLE = "ROLE_USER";
     private static final String ADMIN_ROLE = "ROLE_ADMIN";
+    private final UserRepository userRepository;
+    private final RoleService roleService;
 
-    public CustomUserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
+    public CustomUserServiceImpl(UserRepository userRepository, RoleService roleService) {
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
+        this.roleService = roleService;
     }
 
     @Override
@@ -49,42 +47,28 @@ public class CustomUserServiceImpl implements UserDetailsService, CustomUserServ
 
     @Override
     public void saveUser(User user) {
-        Role role = roleRepository.findByName(USER_ROLE);
-        if (role == null) {
-            role = new Role(USER_ROLE);
-        }
-        roleRepository.save(role);
-        user.addRole(role);
+        Role userRole = roleService.findRoleByName(USER_ROLE);
+        user.addRole(userRole);
         userRepository.save(user);
     }
 
     @Override
     public void saveAdmin(User user) {
-        Role adminRole = roleRepository.findByName(ADMIN_ROLE);
-        if (adminRole == null) {
-            adminRole = new Role(ADMIN_ROLE);
-        }
-        roleRepository.save(adminRole);
+        Role adminRole = roleService.findRoleByName(ADMIN_ROLE);
         user.addRole(adminRole);
         userRepository.save(user);
     }
 
     @Override
     public void addRoleToUser(User user, Role newRole) {
-        Role role = roleRepository.findByName(newRole.getName());
+        Role role = roleService.findRoleByName(newRole.getName());
         if (role == null) {
-            role = new Role(newRole.getName());
-            roleRepository.save(role);
+            roleService.saveRole(new Role(newRole.getName()));
         }
         user.addRole(role);
         userRepository.save(user);
     }
 
-    @Override
-    public void removeRoleFromUser(User user, Role role) {
-        user.deleteRole(role);
-        userRepository.save(user);
-    }
 
     @Override
     public void updateUser(int id, User user) {

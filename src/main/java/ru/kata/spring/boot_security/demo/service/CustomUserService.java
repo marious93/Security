@@ -20,8 +20,6 @@ public interface CustomUserService {
 
     public void addRoleToUser(User user, Role newRole);
 
-    public void removeRoleFromUser(User user, Role oldRole);
-
     public void updateUser(int id, User user);
 
     public void deleteUserById(int id);
