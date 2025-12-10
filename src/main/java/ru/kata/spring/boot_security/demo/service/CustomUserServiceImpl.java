@@ -47,15 +47,21 @@ public class CustomUserServiceImpl implements UserDetailsService, CustomUserServ
 
     @Override
     public void saveUser(User user) {
-        Role userRole = roleService.findRoleByName(USER_ROLE);
-        user.addRole(userRole);
+        Role role = roleService.findRoleByName(USER_ROLE);
+        if (role == null) {
+            roleService.saveRole(new Role(USER_ROLE));
+        }
+        user.addRole(role);
         userRepository.save(user);
     }
 
     @Override
     public void saveAdmin(User user) {
-        Role adminRole = roleService.findRoleByName(ADMIN_ROLE);
-        user.addRole(adminRole);
+        Role role = roleService.findRoleByName(ADMIN_ROLE);
+        if (role == null) {
+            roleService.saveRole(new Role(ADMIN_ROLE));
+        }
+        user.addRole(role);
         userRepository.save(user);
     }
 
