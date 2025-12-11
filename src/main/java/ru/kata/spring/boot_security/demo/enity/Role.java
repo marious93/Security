@@ -1,7 +1,6 @@
 package ru.kata.spring.boot_security.demo.enity;
 
 import lombok.Data;
-import lombok.Getter;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -15,7 +14,7 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Getter
+
     private String name;
 
     @ManyToMany
