@@ -17,10 +17,6 @@ public interface CustomUserService extends UserDetailsService {
 
     public void saveUser(User user);
 
-    public void saveAdmin(User user);
-
-    public void addRoleToUser(User user, Role newRole);
-
     public void updateUser(int id, User user);
 
     public void deleteUserById(int id);

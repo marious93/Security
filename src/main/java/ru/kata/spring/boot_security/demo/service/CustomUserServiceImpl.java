@@ -4,7 +4,6 @@ package ru.kata.spring.boot_security.demo.service;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,27 +55,6 @@ public class CustomUserServiceImpl implements CustomUserService {
     }
 
     @Override
-    public void saveAdmin(User user) {
-        Role role = roleService.findRoleByName(ADMIN_ROLE);
-        if (role == null) {
-            roleService.saveRole(new Role(ADMIN_ROLE));
-        }
-        user.addRole(role);
-        userRepository.save(user);
-    }
-
-    @Override
-    public void addRoleToUser(User user, Role newRole) {
-        Role role = roleService.findRoleByName(newRole.getName());
-        if (role == null) {
-            roleService.saveRole(new Role(newRole.getName()));
-        }
-        user.addRole(role);
-        userRepository.save(user);
-    }
-
-
-    @Override
     public void updateUser(int id, User user) {
         User oldUser = userRepository.findById(id).orElseThrow(
                 () -> new UsernameNotFoundException("User not found"));
@@ -107,6 +85,5 @@ public class CustomUserServiceImpl implements CustomUserService {
     private Collection<? extends GrantedAuthority> convertMapToSet(Collection<Role> roles) {
         return roles.stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toSet());
     }
-
 
 }
