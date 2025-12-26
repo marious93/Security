@@ -166,6 +166,8 @@
                                         </form>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
 
                                 <div class="modal fade" id="exampleModal" tabindex="-1"
                                      aria-labelledby="exampleModalLabel"
@@ -243,9 +245,10 @@
                                                             <button type="submit" id="action" class="btn btn-primary">
                                                                 Click me
                                                             </button>
+
                                                         </div>
                                                     </form>
-                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -258,7 +261,7 @@
             <div class="col"></div>
         </div>
     </div>
-</div>
+
 <script th:inline="javascript">
     const exampleModal = document.getElementById('exampleModal');
     const btn = document.getElementById('myForm1');
@@ -286,10 +289,9 @@
                 document.getElementById('exampleModalLabel').innerText = "Delete user"
                 postURL = 'http://localhost:8080/admin/delete/' + id;
             }
-
-            fetch(getURL) // URL для запроса
+            fetch(getURL)
                 .then(response => {
-                    if (!response.ok) { // Проверка на успешный статус (200-299)
+                    if (!response.ok) {
                         throw new Error('Сетевая ошибка: ' + response.status);
                     }
                     return response.text(); // Преобразуем ответ в JSON, можно использовать .text()
@@ -309,7 +311,6 @@
                     document.getElementById('age1').value = inputElement4.value;
                     document.getElementById('username1').value = inputElement5.value;
                     document.getElementById('password1').value = inputElement6.value;
-
 
                 })
                 .catch(error => {
@@ -358,12 +359,12 @@
             }
         });
     }
-        document.getElementById("tab1-tab").addEventListener('click', event => {
-            document.getElementById('h').innerText = "All users"
-        })
-        document.getElementById("tab2-tab").addEventListener('click', event => {
-            document.getElementById('h').innerText = "Add new user"
-        })
+        // document.getElementById("tab1-tab").addEventListener('click', event => {
+        //     document.getElementById('h').innerText = "All users"
+        // })
+        // document.getElementById("tab2-tab").addEventListener('click', event => {
+        //     document.getElementById('h').innerText = "Add new user"
+        // })
 
 
 </script>

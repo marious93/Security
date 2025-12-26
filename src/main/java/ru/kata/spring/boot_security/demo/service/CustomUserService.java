@@ -8,17 +8,18 @@ import java.util.List;
 
 
 public interface CustomUserService extends UserDetailsService {
-    public List<User> getUsersList();
+    List<User> getUsersList();
 
-    public User findUserByUsername(String username);
+    User findUserByUsername(String username);
 
-    public User findUserById(int id);
+    User findUserById(int id);
 
-    public void saveUser(User user, List<Integer> roleIds);
 
-    public void updateUser(int id, User user, List<Integer> roleIds);
+    void saveUser(User user, List<Integer> roleIds);
 
-    public void deleteUserById(int id);
+    void updateUser(int id, User user, List<Integer> roleIds);
 
-    public int getUserIdByUsername(String username);
+    void deleteUserById(int id);
+
+    int getUserIdByUsername(String username);
 }
