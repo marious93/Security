@@ -172,8 +172,6 @@
                                         </form>
                                     </div>
                                 </div>
-                                <!--                            </div>-->
-                                <!--                        </div>-->
 
                                 <div class="modal fade" id="exampleModal" tabindex="-1"
                                      aria-labelledby="exampleModalLabel"
@@ -265,6 +263,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -286,48 +285,48 @@
         exampleModal.addEventListener('show.bs.modal', event => {
             const editButton = document.querySelectorAll('.btn-info')
             const deleteButton = document.querySelectorAll('.btn-danger')
-            // editButton.forEach(button => {
-            //     button.addEventListener('click', function () {
-            //         id = button.getAttribute('data-id')
-            //         document.getElementById('Id1').value = id;
-            //         getURL = 'http://localhost:8080/admin/edit/' + id;
-            //         document.getElementById('firstName1').disabled = false;
-            //         document.getElementById('lastName1').disabled = false;
-            //         document.getElementById('age1').disabled = false;
-            //         document.getElementById('username1').disabled = false;
-            //         document.getElementById('password1').disabled = false;
-            //         document.getElementById('roles1').disabled = false;
-            //         postURL = getURL;
-            //         document.getElementById('action').innerText = 'Edit';
-            //         document.getElementById('exampleModalLabel').innerText = "Edit user"
-            //
-            //         fetch(getURL)
-            //             .then(response => {
-            //                 if (!response.ok) {
-            //                     throw new Error('Сетевая ошибка: ' + response.status);
-            //                 }
-            //                 return response.text(); // Преобразуем ответ в JSON, можно использовать .text()
-            //             })
-            //             .then(data => {
-            //                 const parser = new DOMParser();
-            //                 const doc = parser.parseFromString(data, 'text/html');
-            //                 const inputElement2 = doc.getElementById('firstName');
-            //                 const inputElement3 = doc.getElementById('lastName')
-            //                 const inputElement4 = doc.getElementById('age');
-            //                 const inputElement5 = doc.getElementById('username')
-            //                 const inputElement6 = doc.getElementById('password');
-            //                 // const inputElement3 = doc.getElementById('lastName')
-            //                 document.getElementById('firstName1').value = inputElement2.value;
-            //                 document.getElementById('lastName1').value = inputElement3.value;
-            //                 document.getElementById('age1').value = inputElement4.value;
-            //                 document.getElementById('username1').value = inputElement5.value;
-            //                 document.getElementById('password1').value = inputElement6.value;
-            //             })
-            //             .catch(error => {
-            //                 console.error('Ошибка при запросе:', error); // Обработка ошибок
-            //             });
-            //     })
-            // })
+            editButton.forEach(button => {
+                button.addEventListener('click', function () {
+                    id = button.getAttribute('data-id')
+                    document.getElementById('Id1').value = id;
+                    getURL = 'http://localhost:8080/admin/edit/' + id;
+                    document.getElementById('firstName1').disabled = false;
+                    document.getElementById('lastName1').disabled = false;
+                    document.getElementById('age1').disabled = false;
+                    document.getElementById('username1').disabled = false;
+                    document.getElementById('password1').disabled = false;
+                    document.getElementById('roles1').disabled = false;
+                    postURL = getURL;
+                    document.getElementById('action').innerText = 'Edit';
+                    document.getElementById('exampleModalLabel').innerText = "Edit user"
+
+                    fetch(getURL)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Сетевая ошибка: ' + response.status);
+                            }
+                            return response.text(); // Преобразуем ответ в JSON, можно использовать .text()
+                        })
+                        .then(data => {
+                            const parser = new DOMParser();
+                            const doc = parser.parseFromString(data, 'text/html');
+                            const inputElement2 = doc.getElementById('firstName');
+                            const inputElement3 = doc.getElementById('lastName')
+                            const inputElement4 = doc.getElementById('age');
+                            const inputElement5 = doc.getElementById('username')
+                            const inputElement6 = doc.getElementById('password');
+                            // const inputElement3 = doc.getElementById('lastName')
+                            document.getElementById('firstName1').value = inputElement2.value;
+                            document.getElementById('lastName1').value = inputElement3.value;
+                            document.getElementById('age1').value = inputElement4.value;
+                            document.getElementById('username1').value = inputElement5.value;
+                            document.getElementById('password1').value = inputElement6.value;
+                        })
+                        .catch(error => {
+                            console.error('Ошибка при запросе:', error); // Обработка ошибок
+                        });
+                })
+            })
 
             deleteButton.forEach(button => {
                 button.addEventListener('click', function () {
@@ -374,27 +373,27 @@
             btn.addEventListener('submit', function () {
                 // event.preventDefault();
                 if (id && postURL) {
-                    // const formData = new FormData();
-                    // formData.append('id', id);
-                    // formData.append('username', document.getElementById('username1').value);
-                    // formData.append('firstName', document.getElementById('firstName1').value);
-                    // formData.append('lastName', document.getElementById('lastName1').value);
-                    // formData.append('password', document.getElementById('password1').value);
-                    // formData.append('age', document.getElementById('age1').value);
-                    // const colorSelect = document.getElementById('roles1');
-                    //
-                    // const selectedOptions = [];
-                    // // Перебираем все опции
-                    // for (let i = 0; i < colorSelect.options.length; i++) {
-                    //     // Если опция выбрана, добавляем её value в массив
-                    //     if (colorSelect.options[i].selected) {
-                    //         selectedOptions.push(colorSelect.options[i].value);
-                    //     }
-                    // }
-                    // formData.append('roles', selectedOptions);
+                    const formData = new FormData();
+                    formData.append('id', id);
+                    formData.append('username', document.getElementById('username1').value);
+                    formData.append('firstName', document.getElementById('firstName1').value);
+                    formData.append('lastName', document.getElementById('lastName1').value);
+                    formData.append('password', document.getElementById('password1').value);
+                    formData.append('age', document.getElementById('age1').value);
+                    const colorSelect = document.getElementById('roles1');
+
+                    const selectedOptions = [];
+                    // Перебираем все опции
+                    for (let i = 0; i < colorSelect.options.length; i++) {
+                        // Если опция выбрана, добавляем её value в массив
+                        if (colorSelect.options[i].selected) {
+                            selectedOptions.push(colorSelect.options[i].value);
+                        }
+                    }
+                    formData.append('roles', selectedOptions);
                     fetch(postURL, {
-                        method: 'POST'
-                        // body: formData, // Отправляем данные в формате FormData
+                        method: 'POST',
+                        body: formData, // Отправляем данные в формате FormData
                     })
                         .then(response => {
                             if (response.ok) { // Проверяем, что ответ успешный (статус 200-299)

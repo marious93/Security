@@ -30,7 +30,7 @@
 
     <label for="roles">Role</label>
     <select id="roles" name="roles" multiple>
-        <option th:each="role : ${roles}" th:value="${role.getId()}"
+        <option th:each="role : ${allRoles}" th:value="${role.getId()}"
                 th:text="${role.getName()}"></option>
     </select>
     <input type="submit" value="Update!"/>
