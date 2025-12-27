@@ -16,7 +16,7 @@ public interface CustomUserService extends UserDetailsService {
 
     void saveUser(User user, List<Integer> roleIds);
 
-    void updateUser(int id, User user, List<Integer> roleIds);
+    void updateUser(int id, User user);
 
     void deleteUserById(int id);
 

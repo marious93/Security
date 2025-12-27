@@ -57,7 +57,7 @@ public class CustomUserServiceImpl implements CustomUserService {
     }
 
     @Override
-    public void updateUser(int id, User user, List<Integer> roleIds) {
+    public void updateUser(int id, User user) {
         User oldUser = userRepository.findById(id).orElseThrow(
                 () -> new UsernameNotFoundException("User not found"));
         oldUser.setUsername(user.getUsername());
@@ -65,10 +65,7 @@ public class CustomUserServiceImpl implements CustomUserService {
         oldUser.setLastName(user.getLastName());
         oldUser.setFirstName(user.getFirstName());
         oldUser.setAge(user.getAge());
-        Set<Role> roles = roleIds.stream()
-                .map(i -> roleRepository.findById(i).orElseThrow(() -> new EntityNotFoundException("Role not found")))
-                .collect(Collectors.toSet());
-        oldUser.setRoles(roles);
+        oldUser.setRoles(user.getRoles());
         userRepository.save(oldUser);
     }
 

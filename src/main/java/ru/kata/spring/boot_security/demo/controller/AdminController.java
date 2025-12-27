@@ -69,12 +69,12 @@ public class AdminController {
 
     @PostMapping("/edit/{id}")
     public String updateUser(@ModelAttribute("user") @Validated User user, BindingResult bindingResult,
-                             @PathVariable int id,
-                             @RequestParam("roles") List<Integer> roleIds) {
+                             @PathVariable int id
+                             ) {
         if (bindingResult.hasErrors()) {
             return "admin/edit";
         }
-        userService.updateUser(id, user, roleIds);
+        userService.updateUser(id, user);
         return "redirect:/admin";
     }
 
