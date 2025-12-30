@@ -48,11 +48,7 @@ public class CustomUserServiceImpl implements CustomUserService {
     }
 
     @Override
-    public void saveUser(User user, List<Integer> roleIds) {
-        Set<Role> roles = roleIds.stream()
-                .map(id -> roleRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Role not found")))
-                .collect(Collectors.toSet());
-        user.setRoles(roles);
+    public void saveUser(User user) {
         userRepository.save(user);
     }
 

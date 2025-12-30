@@ -32,12 +32,11 @@ public class AdminController {
     }
 
     @PostMapping("/new")
-    public String createUser(@ModelAttribute("newUser") @Validated User user, BindingResult bindingResult,
-                             @RequestParam("roles") List<Integer> roles) {
+    public String createUser(@ModelAttribute("newUser") @Validated User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "admin/create";
         }
-        userService.saveUser(user, roles);
+        userService.saveUser(user);
         return "redirect:/admin";
     }
 
@@ -72,7 +71,7 @@ public class AdminController {
                              @PathVariable int id
                              ) {
         if (bindingResult.hasErrors()) {
-            return "admin/edit";
+            return "public/Test";
         }
         userService.updateUser(id, user);
         return "redirect:/admin";
@@ -83,5 +82,23 @@ public class AdminController {
         userService.deleteUserById(id);
         return "redirect:/admin";
     }
+
+    //  @GetMapping("/edit/{id}")
+    //    public String updateUser(@PathVariable int id, Model model) {
+    //        model.addAttribute("user", userService.findUserById(id));
+    //        model.addAttribute("allRoles",roleService.findAllRoles());
+    //        return "admin/edit";
+    //    }
+    //
+    //    @PostMapping("/edit/{id}")
+    //    public String updateUser(@ModelAttribute("user") @Validated User user, BindingResult bindingResult,
+    //                             @PathVariable int id
+    //                             ) {
+    //        if (bindingResult.hasErrors()) {
+    //            return "admin/edit";
+    //        }
+    //        userService.updateUser(id, user);
+    //        return "redirect:/admin";
+    //    }
 
 }

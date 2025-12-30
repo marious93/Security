@@ -34,7 +34,6 @@ public class User implements UserDetails {
     private String lastName;
 
     private int age;
-    ;
 
     private String username;
 
