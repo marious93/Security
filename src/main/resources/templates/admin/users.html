@@ -11,7 +11,7 @@
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
             crossorigin="anonymous">
     </script>
-<!--    <script src="js/jquery-3.7.1.min.js"></script>-->
+    <!--    <script src="js/jquery-3.7.1.min.js"></script>-->
 
 </head>
 <body>
@@ -280,15 +280,13 @@
             </div>
         </div>
     </div>
-    <!--        <div class="col"></div>-->
 </div>
-<!--</div>-->
 
 
 <script th:inline="javascript">
     const exampleModal = document.getElementById('exampleModal');
     const btn = document.getElementById('myForm1');
-    bdn = document.querySelectorAll('.btn-warning')
+    // bdn = document.querySelectorAll('.btn-warning')
     let getURL = undefined
     let postURL = undefined
     let id = null;
@@ -379,7 +377,8 @@
                 })
             })
 
-            btn.addEventListener('submit', function () {
+            btn.addEventListener('submit', async function (e) {
+                e.preventDefault();
                 if (id && postURL) {
                     const formData = new FormData();
                     formData.append('id', id);
@@ -407,8 +406,7 @@
                             }
                         })
                         .catch((error) => {
-                            console.error('Ошибка:', error);
-                            document.getElementById('response').textContent = 'Произошла ошибка при отправке.';
+                            window.alert(error.toString())
                         });
                 }
             });
