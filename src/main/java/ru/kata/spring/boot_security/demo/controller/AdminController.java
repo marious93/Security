@@ -51,7 +51,6 @@ public class AdminController {
         model.addAttribute("newUser", new User());
         model.addAttribute("users", userService.getUsersList());
         model.addAttribute("userToEdit",new User());
-        model.addAttribute("userToDelete",new User());
         model.addAttribute("allRoles", roleService.findAllRoles());
         return "admin/users";
     }
