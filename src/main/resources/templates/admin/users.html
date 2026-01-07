@@ -11,7 +11,7 @@
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
             crossorigin="anonymous">
     </script>
-    <!--    <script src="js/jquery-3.7.1.min.js"></script>-->
+
 
 </head>
 <body>
@@ -39,7 +39,7 @@
                     <a href="http://localhost:8080/admin" sec:authorize="hasAuthority('ADMIN')"
                        class="list-group-item active" style="margin-left: 10px; "
                        aria-current="true">Admin</a>
-                    <a href="http://localhost:8080/user" sec:authorize="hasAuthority('USER')" class="list-group-item "
+                    <a href="http://localhost:8080/user" class="list-group-item "
                        style="margin-left: 10px; ">
                         User</a>
                 </li>
@@ -121,12 +121,13 @@
                                  role="tabpanel"
                                  aria-labelledby="tab2-tab">
                                 <div class="col-13" style="text-align: center;">
-                                    <form th:method="POST" th:action="@{/admin/new}" th:object="${newUser}">
-
+                                    <form id="createForm" th:method="POST" th:action="@{/admin/new}"
+                                          th:object="${newUser}">
                                         <div class="mb-3">
                                             <label><b>First name</b></label>
                                             <br/>
-                                            <input type="text" placeholder="firstName" th:field="*{firstName}"/>
+                                            <input type="text" placeholder="firstName"
+                                                   th:field="*{firstName}"/>
                                             <div style="color:red" th:if="${#fields.hasErrors('firstName')}"
                                                  th:errors="firstName"></div>
                                         </div>
@@ -134,7 +135,8 @@
                                         <div class="mb-3">
                                             <label><b>Last name</b></label>
                                             <br/>
-                                            <input type="text" placeholder="lastName" th:field="*{lastName}"/>
+                                            <input type="text" placeholder="lastName"
+                                                   th:field="*{lastName}"/>
                                             <div style="color:red" th:if="${#fields.hasErrors('lastName')}"
                                                  th:errors="lastName"></div>
                                         </div>
@@ -150,7 +152,8 @@
                                         <div class="mb-3">
                                             <label><b>Email</b></label>
                                             <br/>
-                                            <input type="email" placeholder="username" th:field="*{username}"/>
+                                            <input type="email" placeholder="username"
+                                                   th:field="*{username}"/>
                                             <div style="color:red" th:if="${#fields.hasErrors('username')}"
                                                  th:errors="username"></div>
                                         </div>
@@ -158,15 +161,16 @@
                                         <div class="mb-3">
                                             <label><b>Password</b></label>
                                             <br/>
-                                            <input type="text" placeholder="password" th:field="*{password}"/>
+                                            <input type="text" placeholder="password"
+                                                   th:field="*{password}"/>
                                             <div style="color:red" th:if="${#fields.hasErrors('password')}"
                                                  th:errors="password"></div>
                                         </div>
 
                                         <div class="mb-3">
-                                            <label for="roles"><b>Role</b></label>
+                                            <label><b>Role</b></label>
                                             <br/>
-                                            <select name="roles" id="roles" size="2" multiple>
+                                            <select id="roles" name="roles" size="2" multiple>
                                                 <option th:each="role : ${allRoles}" th:value="${role.id}"
                                                         th:text="${role.name}"></option>
                                             </select>
@@ -286,10 +290,10 @@
 <script th:inline="javascript">
     const exampleModal = document.getElementById('exampleModal');
     const btn = document.getElementById('myForm1');
-    // bdn = document.querySelectorAll('.btn-warning')
     let getURL = undefined
     let postURL = undefined
     let id = null;
+
     if (exampleModal) {
         exampleModal.addEventListener('show.bs.modal', event => {
             const editButton = document.querySelectorAll('.btn-info')
@@ -402,7 +406,7 @@
                     })
                         .then(response => {
                             if (response.ok) {
-                                location.reload()
+                                window.location.href = '/admin';
                             }
                         })
                         .catch((error) => {
@@ -419,7 +423,7 @@
     document.getElementById("tab2-tab").addEventListener('click', event => {
         document.getElementById('h').innerText = "Add new user"
     })
-</script>
 
+</script>
 </body>
 </html>
