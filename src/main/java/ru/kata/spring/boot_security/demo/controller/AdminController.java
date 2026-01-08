@@ -10,8 +10,6 @@ import ru.kata.spring.boot_security.demo.enity.User;
 import ru.kata.spring.boot_security.demo.service.CustomUserService;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
