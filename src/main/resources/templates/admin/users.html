@@ -161,7 +161,7 @@
                                         <div class="mb-3">
                                             <label><b>Password</b></label>
                                             <br/>
-                                            <input type="text" placeholder="password"
+                                            <input type="password" placeholder="password"
                                                    th:field="*{password}"/>
                                             <div style="color:red" th:if="${#fields.hasErrors('password')}"
                                                  th:errors="password"></div>
@@ -290,7 +290,6 @@
 <script th:inline="javascript">
     const exampleModal = document.getElementById('exampleModal');
     const btn = document.getElementById('myForm1');
-    let getURL = undefined
     let postURL = undefined
     let id = null;
 
@@ -301,50 +300,22 @@
             editButton.forEach(button => {
                 button.addEventListener('click', function () {
                     id = button.getAttribute('data-id')
-                    document.getElementById('Id1').value = id;
-                    getURL = 'http://localhost:8080/admin/edit/' + id;
                     document.getElementById('firstName1').disabled = false;
                     document.getElementById('lastName1').disabled = false;
                     document.getElementById('age1').disabled = false;
                     document.getElementById('username1').disabled = false;
                     document.getElementById('password1').disabled = false;
                     document.getElementById('roles1').disabled = false;
-                    postURL = getURL
+                    postURL = 'http://localhost:8080/admin/edit/' + id;
                     document.getElementById('action').innerText = 'Edit';
                     document.getElementById('exampleModalLabel').innerText = "Edit user"
-                    fetch(getURL)
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error('Сетевая ошибка: ' + response.status);
-                            }
-                            return response.text();
-                        })
-                        .then(data => {
-                            const parser = new DOMParser();
-                            const doc = parser.parseFromString(data, 'text/html');
-                            const inputElement2 = doc.getElementById('firstName');
-                            const inputElement3 = doc.getElementById('lastName')
-                            const inputElement4 = doc.getElementById('age');
-                            const inputElement5 = doc.getElementById('username')
-                            const inputElement6 = doc.getElementById('password');
-                            document.getElementById('firstName1').value = inputElement2.value;
-                            document.getElementById('lastName1').value = inputElement3.value;
-                            document.getElementById('age1').value = inputElement4.value;
-                            document.getElementById('username1').value = inputElement5.value;
-                            document.getElementById('password1').value = inputElement6.value;
-
-                        })
-                        .catch(error => {
-                            console.error('Ошибка при запросе:', error);
-                        });
+                    loadUserData(id)
                 })
             })
 
             deleteButton.forEach(button => {
                 button.addEventListener('click', function () {
                     id = button.getAttribute('data-id')
-                    document.getElementById('Id1').value = id;
-                    getURL = 'http://localhost:8080/admin/edit/' + id;
                     document.getElementById('firstName1').disabled = true;
                     document.getElementById('lastName1').disabled = true;
                     document.getElementById('age1').disabled = true;
@@ -354,52 +325,15 @@
                     document.getElementById('action').innerText = "Delete";
                     document.getElementById('exampleModalLabel').innerText = "Delete user"
                     postURL = 'http://localhost:8080/admin/delete/' + id;
-                    fetch(getURL)
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error('Сетевая ошибка: ' + response.status);
-                            }
-                            return response.text();
-                        })
-                        .then(data => {
-                            const parser = new DOMParser();
-                            const doc = parser.parseFromString(data, 'text/html');
-                            const inputElement2 = doc.getElementById('firstName');
-                            const inputElement3 = doc.getElementById('lastName')
-                            const inputElement4 = doc.getElementById('age');
-                            const inputElement5 = doc.getElementById('username')
-                            const inputElement6 = doc.getElementById('password');
-                            document.getElementById('firstName1').value = inputElement2.value;
-                            document.getElementById('lastName1').value = inputElement3.value;
-                            document.getElementById('age1').value = inputElement4.value;
-                            document.getElementById('username1').value = inputElement5.value;
-                            document.getElementById('password1').value = inputElement6.value;
-                        })
-                        .catch(error => {
-                            console.error('Ошибка при запросе:', error); // Обработка ошибок
-                        });
+                    loadUserData(id)
                 })
             })
 
             btn.addEventListener('submit', async function (e) {
                 e.preventDefault();
+                let formData;
                 if (id && postURL) {
-                    const formData = new FormData();
-                    formData.append('id', id);
-                    formData.append('username', document.getElementById('username1').value);
-                    formData.append('firstName', document.getElementById('firstName1').value);
-                    formData.append('lastName', document.getElementById('lastName1').value);
-                    formData.append('password', document.getElementById('password1').value);
-                    formData.append('age', document.getElementById('age1').value);
-                    const roleSelect = document.getElementById('roles1');
-
-                    const selectedOptions = [];
-                    for (let i = 0; i < roleSelect.options.length; i++) {
-                        if (roleSelect.options[i].selected) {
-                            selectedOptions.push(roleSelect.options[i].value);
-                        }
-                    }
-                    formData.append('roles', selectedOptions);
+                    formData = collectUserData(id)
                     fetch(postURL, {
                         method: 'POST',
                         body: formData,
@@ -424,6 +358,54 @@
         document.getElementById('h').innerText = "Add new user"
     })
 
+    function loadUserData(id) {
+        let getURL = 'http://localhost:8080/admin/edit/' + id;
+        fetch(getURL)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Сетевая ошибка: ' + response.status);
+                }
+                return response.text();
+            })
+            .then(data => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(data, 'text/html');
+                const inputElement2 = doc.getElementById('firstName');
+                const inputElement3 = doc.getElementById('lastName')
+                const inputElement4 = doc.getElementById('age');
+                const inputElement5 = doc.getElementById('username')
+                const inputElement6 = doc.getElementById('password');
+                document.getElementById('Id1').value = id;
+                document.getElementById('firstName1').value = inputElement2.value;
+                document.getElementById('lastName1').value = inputElement3.value;
+                document.getElementById('age1').value = inputElement4.value;
+                document.getElementById('username1').value = inputElement5.value;
+                document.getElementById('password1').value = inputElement6.value;
+
+            })
+            .catch(error => {
+                console.error('Ошибка при запросе:', error);
+            });
+    }
+    function collectUserData(id){
+        const formData = new FormData();
+        formData.append('id', id);
+        formData.append('username', document.getElementById('username1').value);
+        formData.append('firstName', document.getElementById('firstName1').value);
+        formData.append('lastName', document.getElementById('lastName1').value);
+        formData.append('password', document.getElementById('password1').value);
+        formData.append('age', document.getElementById('age1').value);
+        const roleSelect = document.getElementById('roles1');
+
+        const selectedOptions = [];
+        for (let i = 0; i < roleSelect.options.length; i++) {
+            if (roleSelect.options[i].selected) {
+                selectedOptions.push(roleSelect.options[i].value);
+            }
+        }
+        formData.append('roles', selectedOptions);
+        return formData
+    }
 </script>
 </body>
 </html>
