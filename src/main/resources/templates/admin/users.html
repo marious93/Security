@@ -300,54 +300,59 @@
             editButton.forEach(button => {
                 button.addEventListener('click', function () {
                     id = button.getAttribute('data-id')
-                    document.getElementById('firstName1').disabled = false;
-                    document.getElementById('lastName1').disabled = false;
-                    document.getElementById('age1').disabled = false;
-                    document.getElementById('username1').disabled = false;
-                    document.getElementById('password1').disabled = false;
-                    document.getElementById('roles1').disabled = false;
+                    unlockEditInput()
                     postURL = 'http://localhost:8080/admin/edit/' + id;
                     document.getElementById('action').innerText = 'Edit';
                     document.getElementById('exampleModalLabel').innerText = "Edit user"
                     loadUserData(id)
+                    btn.addEventListener('submit', async function (e) {
+                        e.preventDefault();
+                        let formData;
+                        if (id && postURL) {
+                            formData = collectUserData(id)
+                            fetch(postURL, {
+                                method: 'POST',
+                                body: formData,
+                            })
+                                .then(response => {
+                                    if (response.ok) {
+                                        window.location.href = '/admin';
+                                    }
+                                })
+                                .catch((error) => {
+                                    window.alert(error.toString())
+                                });
+                        }
+                    });
                 })
             })
 
             deleteButton.forEach(button => {
                 button.addEventListener('click', function () {
                     id = button.getAttribute('data-id')
-                    document.getElementById('firstName1').disabled = true;
-                    document.getElementById('lastName1').disabled = true;
-                    document.getElementById('age1').disabled = true;
-                    document.getElementById('username1').disabled = true;
-                    document.getElementById('password1').disabled = true;
-                    document.getElementById('roles1').disabled = true;
+                    lockEditInput()
                     document.getElementById('action').innerText = "Delete";
                     document.getElementById('exampleModalLabel').innerText = "Delete user"
                     postURL = 'http://localhost:8080/admin/delete/' + id;
                     loadUserData(id)
+                    btn.addEventListener('submit', async function (e) {
+                        e.preventDefault();
+                        if (id && postURL) {
+                            fetch(postURL, {
+                                method: 'POST',
+                            })
+                                .then(response => {
+                                    if (response.ok) {
+                                        window.location.href = '/admin';
+                                    }
+                                })
+                                .catch((error) => {
+                                    window.alert(error.toString())
+                                });
+                        }
+                    });
                 })
             })
-
-            btn.addEventListener('submit', async function (e) {
-                e.preventDefault();
-                let formData;
-                if (id && postURL) {
-                    formData = collectUserData(id)
-                    fetch(postURL, {
-                        method: 'POST',
-                        body: formData,
-                    })
-                        .then(response => {
-                            if (response.ok) {
-                                window.location.href = '/admin';
-                            }
-                        })
-                        .catch((error) => {
-                            window.alert(error.toString())
-                        });
-                }
-            });
 
         })
     }
@@ -357,6 +362,23 @@
     document.getElementById("tab2-tab").addEventListener('click', event => {
         document.getElementById('h').innerText = "Add new user"
     })
+
+    function unlockEditInput(){
+        document.getElementById('firstName1').disabled = false;
+        document.getElementById('lastName1').disabled = false;
+        document.getElementById('age1').disabled = false;
+        document.getElementById('username1').disabled = false;
+        document.getElementById('password1').disabled = false;
+        document.getElementById('roles1').disabled = false;
+    }
+    function lockEditInput(){
+        document.getElementById('firstName1').disabled = true;
+        document.getElementById('lastName1').disabled = true;
+        document.getElementById('age1').disabled = true;
+        document.getElementById('username1').disabled = true;
+        document.getElementById('password1').disabled = true;
+        document.getElementById('roles1').disabled = true;
+    }
 
     function loadUserData(id) {
         let getURL = 'http://localhost:8080/admin/edit/' + id;
