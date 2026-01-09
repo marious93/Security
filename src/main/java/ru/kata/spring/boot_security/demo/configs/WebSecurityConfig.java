@@ -40,8 +40,8 @@ public class WebSecurityConfig {
                 )
 
                 .logout(logout -> logout
-                        .logoutUrl("/logout") // URL для выхода
-                        .logoutSuccessUrl("/login") // Куда перенаправить после выхода
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login")
                         .permitAll()
                 )
                 .csrf(AbstractHttpConfigurer::disable);

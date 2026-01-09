@@ -324,6 +324,7 @@
                                 });
                         }
                     });
+
                 })
             })
 
@@ -363,7 +364,7 @@
         document.getElementById('h').innerText = "Add new user"
     })
 
-    function unlockEditInput(){
+    function unlockEditInput() {
         document.getElementById('firstName1').disabled = false;
         document.getElementById('lastName1').disabled = false;
         document.getElementById('age1').disabled = false;
@@ -371,7 +372,8 @@
         document.getElementById('password1').disabled = false;
         document.getElementById('roles1').disabled = false;
     }
-    function lockEditInput(){
+
+    function lockEditInput() {
         document.getElementById('firstName1').disabled = true;
         document.getElementById('lastName1').disabled = true;
         document.getElementById('age1').disabled = true;
@@ -391,12 +393,12 @@
             })
             .then(data => {
                 const parser = new DOMParser();
-                const doc = parser.parseFromString(data, 'text/html');
-                const inputElement2 = doc.getElementById('firstName');
-                const inputElement3 = doc.getElementById('lastName')
-                const inputElement4 = doc.getElementById('age');
-                const inputElement5 = doc.getElementById('username')
-                const inputElement6 = doc.getElementById('password');
+                const user = parser.parseFromString(data, 'text/html');
+                const inputElement2 = user.getElementById('firstName');
+                const inputElement3 = user.getElementById('lastName')
+                const inputElement4 = user.getElementById('age');
+                const inputElement5 = user.getElementById('username')
+                const inputElement6 = user.getElementById('password');
                 document.getElementById('Id1').value = id;
                 document.getElementById('firstName1').value = inputElement2.value;
                 document.getElementById('lastName1').value = inputElement3.value;
@@ -409,7 +411,8 @@
                 console.error('Ошибка при запросе:', error);
             });
     }
-    function collectUserData(id){
+
+    function collectUserData(id) {
         const formData = new FormData();
         formData.append('id', id);
         formData.append('username', document.getElementById('username1').value);
